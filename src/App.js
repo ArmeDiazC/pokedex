@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import Card from "./components/Card";
+import "./App.scss";
 
 function App() {
   const [pokemon, setPokemon] = useState("");
@@ -11,13 +12,14 @@ function App() {
       .then((data) => {
         console.log(data);
         setPokemons(data);
-      }).catch((error)=>console.error(error))
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   const findPokemon = () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
       .then((resp) => resp.json())
-      .then((data) => console.log(data))
+      .then((data) => console.log(data));
   };
 
   return (
@@ -27,13 +29,15 @@ function App() {
         onChange={({ target }) => setPokemon(target.value)}
         value={pokemon}
       ></input>
-      <button onClick={findPokemon}>Buscar</button>
-      <div></div>
-      <div>
-        {pokemons?.results.map((poke) => (
-          <div><a href={poke.url} key={poke.name}>{poke.name}</a></div>
+      <button onClick={findPokemon}>Search</button>
+      <div className="App__container">
+      {pokemons?.results.map((poke) => (
+          <Card name={poke.name} />
         ))}
       </div>
+     
+        
+     
     </div>
   );
 }
