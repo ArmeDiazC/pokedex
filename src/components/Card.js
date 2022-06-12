@@ -1,38 +1,24 @@
 import { useState, useEffect } from "react";
 import "./styles/Card.scss";
 
-
-const Card=({ name }) =>{
-  const [pokemon, setPokemon] = useState();
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        setPokemon(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
+const Card = ({ pokemon }) => {
+ 
+  
 
   return (
-    <div className="card" >
+    <div className="card">
       <img
-       className="card__img"
+        className="card__img"
         src={pokemon?.sprites?.front_default}
         alt={pokemon?.name}
       />
-      <div className="card__content">
-        
-        {pokemon?.name}
-       
-      </div>
+      <div className="card__content">{pokemon?.name}</div>
       <div className="card__footer">
-        <button >Favorite</button>
-        <button >Add to compare</button>
+        <button>Add to favorite</button>
+        {/* <button >Add to compare</button> */}
       </div>
     </div>
   );
-}
+};
 
-export default Card
+export default Card;

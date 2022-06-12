@@ -1,4 +1,6 @@
 .card{
+    box-sizing: content-box;
+    width: 25%;
     &__content{
         text-transform: capitalize;
     }
