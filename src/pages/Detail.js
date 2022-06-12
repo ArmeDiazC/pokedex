@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 const Detail = () => {
   let { name } = useParams();
@@ -17,6 +18,7 @@ const Detail = () => {
 
   return (
     <>
+      <SearchBar />
       <h2>DETAIL {name}</h2>
       {pokemon && (
         <>
@@ -27,13 +29,15 @@ const Detail = () => {
               <p>{`ID: #${pokemon.id}`}</p>
               <div>
                 <h3>Type:</h3>
-                {pokemon.types.map(({type}) => (
-                  <span key={type.name}>{type.name}</span>
+                {pokemon.types.map(({ type }) => (
+                  <Link to={`/list/${type.name}`} key={type.name}>
+                    {type.name}
+                  </Link>
                 ))}
               </div>
               <div>
                 <h3>Abilities:</h3>
-                {pokemon.abilities.map(({ability}) => (
+                {pokemon.abilities.map(({ ability }) => (
                   <span key={ability.name}>{ability.name}</span>
                 ))}
               </div>
