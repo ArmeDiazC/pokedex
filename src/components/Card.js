@@ -11,10 +11,10 @@ const Card = ({ pokemon }) => {
       />
       <div className="card__content">
         <h4 className="card__id">#{pokemon.id}</h4>
-        <h4 className="card__name">{pokemon.name}</h4>
+        <h3 className="card__name">{pokemon.name}</h3>
       </div>
       <div className="card__footer">
-        <button>Add to favorite</button>
+        {/* <button>Add to favorite</button> */}
       </div>
     </Link>
   );

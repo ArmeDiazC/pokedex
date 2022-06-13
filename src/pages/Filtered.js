@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Card from "../components/Card";
 import "./styles/Filtered.scss";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Filtered = () => {
   let { filter } = useParams();
   const [pokemonData, setPokemonData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`https://pokeapi.co/api/v2/type/${filter}`)
       .then((resp) => resp.json())
       .then((data) => {
@@ -22,6 +25,7 @@ const Filtered = () => {
       pokemons.push(await getPokemonDetail(pokemon));
     }
     setPokemonData(pokemons);
+    setIsLoading(false);
   };
 
   const getPokemonDetail = async ({ pokemon }) => {
@@ -35,12 +39,16 @@ const Filtered = () => {
     <div className="Filtered">
       <Header />
       <h1>Pokemons type {filter}</h1>
-      {pokemonData && (
-        <div className="list">
-          {pokemonData.map((pokemon) => (
-          <Card pokemon={pokemon} key={pokemon.name} />
-          ))}
-        </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <div className="list">
+            {pokemonData.map((pokemon) => (
+              <Card pokemon={pokemon} key={pokemon.name} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
