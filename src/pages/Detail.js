@@ -14,10 +14,11 @@ const Detail = () => {
         console.log(data);
         setPokemon(data);
       });
-  }, []);
+  }, [name]);
 
   return (
     <>
+      <Link to={`/`}>Home</Link>
       <SearchBar />
       <h2>DETAIL {name}</h2>
       {pokemon && (

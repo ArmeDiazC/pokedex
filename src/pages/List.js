@@ -1,6 +1,6 @@
 import SearchBar from "../components/SearchBar";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Card from "../components/Card";
 
 const List = () => {
@@ -21,7 +21,6 @@ const List = () => {
       pokemons.push(await getPokemonDetail(pokemon));
     }
     setPokemonData(pokemons);
-   
   };
 
   const getPokemonDetail = async ({ pokemon }) => {
@@ -33,6 +32,7 @@ const List = () => {
 
   return (
     <>
+      <Link to={`/`}>Home</Link>
       <SearchBar />
       <h3>{filter}</h3>
       {pokemonData &&

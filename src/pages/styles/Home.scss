@@ -1,0 +1,15 @@
+.Home {
+  text-align: center;
+  margin: 25px;
+
+  .list {
+    &__items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 80%;
+      margin: 0 auto;
+      gap: 10px;
+    }
+  }
+}

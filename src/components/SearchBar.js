@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 const SearchBar = () => {
   let navigate = useNavigate();
@@ -24,6 +25,8 @@ const SearchBar = () => {
 
   return (
     <>
+     <Link to={`/`}> <img src={logo} /></Link>
+   
       <input
         value={valueInput}
         onChange={handleInput}
