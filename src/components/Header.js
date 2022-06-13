@@ -6,8 +6,10 @@ import "./styles/Header.scss";
 const Header = () => {
   let navigate = useNavigate();
   const [valueInput, setvalueInput] = useState("");
+  const [error, setError] = useState();
 
   const handleInput = (event) => {
+    setError(null);
     setvalueInput(event.target.value);
   };
 
@@ -18,16 +20,19 @@ const Header = () => {
     }
   };
 
-  const handleSearch = () => {
-    console.log("SEARch");
-    navigate(`/pokemon/${valueInput}`);
-    //fetch(`https://pokeapi.co/api/v2/pokemon/${valueInput}`).then(resp=>resp.json()).then()
+  const handleSearch = async () => {
+    const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${valueInput}`);
+
+    if (!resp.ok) {
+      setError("Can't find the Pokemon");
+    } else {
+      navigate(`/pokemon/${valueInput}`);
+    }
   };
 
   return (
     <div className="Header">
       <Link to={`/`} className="Header__logo">
-        {" "}
         <img src={logo} />
       </Link>
       <div className="Header__searchBar">
@@ -35,10 +40,13 @@ const Header = () => {
           value={valueInput}
           onChange={handleInput}
           onKeyDown={onHandleEnterKey}
-          placeholder="Search Pokemon"
+          placeholder="Search Pokemon by name or id"
           type="search"
         />
-        <button onClick={handleSearch} disabled={valueInput==""}>Search</button>
+        <button onClick={handleSearch} disabled={valueInput == ""}>
+          Search
+        </button>
+        {error ? <p className="error">{error}</p> : null}
       </div>
     </div>
   );

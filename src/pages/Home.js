@@ -26,6 +26,7 @@ const Home = () => {
     url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=50"
   ) => {
     setIsLoading(true);
+    setPokemonFiltered([])
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
