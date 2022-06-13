@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
+import LoadingSpinner from "../components/LoadingSpinner";
 import "./styles/Home.scss";
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
   const [filterOptions, setFilterOptions] = useState();
   const [optionValue, setOptionValue] = useState();
   const [pokemonFiltered, setPokemonFiltered] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     handleRequest();
@@ -23,6 +25,7 @@ const Home = () => {
   const handleRequest = (
     url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=50"
   ) => {
+    setIsLoading(true);
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
@@ -41,6 +44,7 @@ const Home = () => {
     setPokemonData(pokemons);
 
     setOptions(pokemons);
+    setIsLoading(false);
   };
 
   const getPokemonDetail = async ({ name }) => {
@@ -78,57 +82,65 @@ const Home = () => {
     <>
       <div className="Home">
         <Header />
-        {pokemonData && (
-          <div className="list">
-            <div>
-              <label>
-                Filter by Type
-                <select
-                  value={optionValue}
-                  onChange={(event) => setOptionValue(event.target.value)}
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <div className="list">
+              <div className="list__filter">
+                <label>
+                  Filter view by Type  
+                  <select
+                    value={optionValue}
+                    onChange={(event) => setOptionValue(event.target.value)}
+                  >
+                    {filterOptions.map((option) => (
+                      <option value={option} key={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button onClick={() => handleFilter()} className="list__button">
+                  Filter
+                </button>
+                <button
+                  onClick={() => handleFilter(true)}
+                  className="list__button list__button-clear"
                 >
-                  {filterOptions.map((option) => (
-                    <option value={option} key={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button onClick={() => handleFilter()} className="list__filter">
-                Filter
-              </button>
-              <button
-                onClick={() => handleFilter(true)}
-                className="list__filter list__filter-clear"
-              >
-                clear
-              </button>
-              <p>We eat {optionValue}!</p>
+                  clear
+                </button>
+                {pokemonFiltered.length != 0 ? (
+                  <h2>Pokemons type {optionValue}</h2>
+                ) : null}
+              </div>
+              <div className="list__items">
+                {pokemonFiltered.length != 0
+                  ? pokemonFiltered.map((pokemon) => (
+                      <Card pokemon={pokemon} key={pokemon.name} />
+                    ))
+                  : pokemonData.map((pokemon) => (
+                      <Card pokemon={pokemon} key={pokemon.name} />
+                    ))}
+              </div>
+              <div className="list__pagination">
+                <button
+                  onClick={() => handleRequest(urls.previous)}
+                  disabled={urls?.previous === null}
+                  className=" list__button list__button-pagination"
+                >
+                  Prev
+                </button>
+                <button
+                  onClick={() => handleRequest(urls.next)}
+                  disabled={urls?.next === null}
+                  className="list__button list__button-pagination"
+                >
+                  Next
+                </button>
+              </div>
             </div>
-            <div className="list__items">
-              {pokemonFiltered.length != 0
-                ? pokemonFiltered.map((pokemon) => (
-                    <Card pokemon={pokemon} key={pokemon.name} />
-                  ))
-                : pokemonData.map((pokemon) => (
-                    <Card pokemon={pokemon} key={pokemon.name} />
-                  ))}
-            </div>
-            <div className="list__links">
-              <button
-                onClick={() => handleRequest(urls.previous)}
-                disabled={urls?.previous === null}
-              >
-                Prev
-              </button>
-              <button
-                onClick={() => handleRequest(urls.next)}
-                disabled={urls?.next === null}
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          </>
         )}
       </div>
     </>
