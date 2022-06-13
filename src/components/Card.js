@@ -3,7 +3,7 @@ import "./styles/Card.scss";
 
 const Card = ({ pokemon }) => {
   return (
-    <Link to={`/pokemon/${pokemon.name}`} className="card">
+    <Link to={`/pokemon/${pokemon.name}`} className="card" data-testid="card">
       <img
         className="card__img"
         src={pokemon.sprites.front_default}

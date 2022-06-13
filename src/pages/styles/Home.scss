@@ -19,10 +19,11 @@
         background: #f9f9f9;
         border-bottom: 5px solid #afafaf;
         color: black;
-        height: 40px;
+        padding: 10px;
         font-size: 18px;
         margin: 5px;
         text-align: center;
+        text-transform: capitalize;
       }
     }
     &__items {

@@ -73,7 +73,7 @@ const Home = () => {
     }
     const pokemons = pokemonData.filter(({ types }) => {
       return types.some(({ type }) => {
-        return type.name == optionValue;
+        return type.name === optionValue;
       });
     });
     return setPokemonFiltered(pokemons);
@@ -109,14 +109,14 @@ const Home = () => {
                   onClick={() => handleFilter(true)}
                   className="list__button list__button-clear"
                 >
-                  clear
+                  Clean
                 </button>
-                {pokemonFiltered.length != 0 ? (
+                {pokemonFiltered.length !== 0 ? (
                   <h2>Pokemons type {optionValue}</h2>
                 ) : null}
               </div>
               <div className="list__items">
-                {pokemonFiltered.length != 0
+                {pokemonFiltered.length !== 0
                   ? pokemonFiltered.map((pokemon) => (
                       <Card pokemon={pokemon} key={pokemon.name} />
                     ))

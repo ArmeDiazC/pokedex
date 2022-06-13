@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Pokedex App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Usage
+
+· You can search by ID or name
+· You can filter by type in the view
+· You can see detailed information about pokemon selected
+· You can see all pokemons of a certain type
 
 ## Available Scripts
 

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./styles/Header.scss";
 
@@ -33,7 +33,7 @@ const Header = () => {
   return (
     <div className="Header">
       <Link to={`/`} className="Header__logo">
-        <img src={logo} />
+        <img alt="logo" src={logo} />
       </Link>
       <div className="Header__searchBar">
         <input
@@ -43,7 +43,7 @@ const Header = () => {
           placeholder="Search Pokemon by name or id"
           type="search"
         />
-        <button onClick={handleSearch} disabled={valueInput == ""}>
+        <button onClick={handleSearch} disabled={valueInput === ""}>
           Search
         </button>
         {error ? <p className="error">{error}</p> : null}

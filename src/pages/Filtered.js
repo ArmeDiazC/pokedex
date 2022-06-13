@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Card from "../components/Card";
 import "./styles/Filtered.scss";
 import LoadingSpinner from "../components/LoadingSpinner";
