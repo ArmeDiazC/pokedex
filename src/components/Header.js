@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import logo from '../assets/logo.png'
+import logo from "../assets/logo.png";
+import "./styles/Header.scss";
 
-const SearchBar = () => {
+const Header = () => {
   let navigate = useNavigate();
   const [valueInput, setvalueInput] = useState("");
 
@@ -24,17 +25,23 @@ const SearchBar = () => {
   };
 
   return (
-    <>
-     <Link to={`/`}> <img src={logo} /></Link>
-   
-      <input
-        value={valueInput}
-        onChange={handleInput}
-        onKeyDown={onHandleEnterKey}
-      />
-      <button onClick={handleSearch}>Search</button>
-    </>
+    <div className="Header">
+      <Link to={`/`} className="Header__logo">
+        {" "}
+        <img src={logo} />
+      </Link>
+      <div className="Header__searchBar">
+        <input
+          value={valueInput}
+          onChange={handleInput}
+          onKeyDown={onHandleEnterKey}
+          placeholder="Search Pokemon"
+          type="search"
+        />
+        <button onClick={handleSearch} disabled={valueInput==""}>Search</button>
+      </div>
+    </div>
   );
 };
 
-export default SearchBar;
+export default Header;

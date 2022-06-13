@@ -1,0 +1,11 @@
+.Filtered {
+    text-align: center;
+    .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 80%;
+        margin: 50px auto;
+        gap: 30px;
+    }
+}

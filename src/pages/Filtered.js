@@ -1,9 +1,10 @@
-import SearchBar from "../components/SearchBar";
+import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Card from "../components/Card";
+import "./styles/Filtered.scss";
 
-const List = () => {
+const Filtered = () => {
   let { filter } = useParams();
   const [pokemonData, setPokemonData] = useState();
 
@@ -31,16 +32,18 @@ const List = () => {
   };
 
   return (
-    <>
-      <Link to={`/`}>Home</Link>
-      <SearchBar />
-      <h3>{filter}</h3>
-      {pokemonData &&
-        pokemonData.map((pokemon) => (
+    <div className="Filtered">
+      <Header />
+      <h1>Pokemons type {filter}</h1>
+      {pokemonData && (
+        <div className="list">
+          {pokemonData.map((pokemon) => (
           <Card pokemon={pokemon} key={pokemon.name} />
-        ))}
-    </>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
-export default List;
+export default Filtered;

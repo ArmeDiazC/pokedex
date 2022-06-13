@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import SearchBar from "../components/SearchBar";
+import Header from "../components/Header";
 
 const Detail = () => {
   let { name } = useParams();
@@ -18,9 +18,8 @@ const Detail = () => {
 
   return (
     <>
-      <Link to={`/`}>Home</Link>
-      <SearchBar />
-      <h2>DETAIL {name}</h2>
+      <Header />
+      <h1>{name}</h1>
       {pokemon && (
         <>
           <div className="pokemon">
