@@ -37,10 +37,6 @@ test("renders Cards", async () => {
   );
   await waitForElementToBeRemoved(screen.getByTestId("spinner"), { timeout: 45000 });
 
-  //await waitForElementToBeRemoved(async() => await screen.getByTestId("spinner"));
-
   const selectElement = screen.getByDisplayValue('grass')
-
-  //const card = screen.getByTestId("card");
   expect(selectElement).toBeInTheDocument();
 });
