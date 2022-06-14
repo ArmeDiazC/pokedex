@@ -4,6 +4,9 @@
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    &-favorite{
+      text-align: center;
+    }
     &__filter {
       text-align: center;
       padding: 10px 50px;
@@ -52,6 +55,13 @@
       &-clear {
         background: #f68b8b;
         border-bottom: 5px solid #bb6868;
+      }
+
+      &-favorites {
+        background: #f6f38b;
+        border-bottom: 5px solid #bbb368;
+        color: black;
+        float: left;
       }
 
       &-pagination {

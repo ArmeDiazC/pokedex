@@ -10,6 +10,9 @@ a {
     border-radius: 20px;
     padding: 20px;
     width: 40%;
+    a{
+        display: block;
+    }
     &__img {
         width: 80%;
     }

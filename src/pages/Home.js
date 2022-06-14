@@ -1,8 +1,9 @@
 import Header from "../components/Header";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
 import "./styles/Home.scss";
+import { Context } from "../components/ContextProvider";
 
 const Home = () => {
   const [pokemonData, setPokemonData] = useState();
@@ -11,6 +12,9 @@ const Home = () => {
   const [optionValue, setOptionValue] = useState();
   const [pokemonFiltered, setPokemonFiltered] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [favorites] = useContext(Context);
+  const [favoritesActive, setFavoritesActive] = useState(false);
 
   useEffect(() => {
     handleRequest();
@@ -26,7 +30,7 @@ const Home = () => {
     url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=50"
   ) => {
     setIsLoading(true);
-    setPokemonFiltered([])
+    setPokemonFiltered([]);
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
@@ -83,65 +87,92 @@ const Home = () => {
     <>
       <div className="Home">
         <Header />
+        {favoritesActive && (
+          <div className="list list-favorite">
+            <h3>Favorites</h3>
+            <button
+              onClick={() => setFavoritesActive(!favoritesActive)}
+              className="list__button"
+            >
+              Back
+            </button>
+            <div className="list__items">
+              {favorites.map((pokemon) => (
+                <Card pokemon={pokemon} key={pokemon.name} />
+              ))}
+            </div>
+          </div>
+        )}
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <>
-            <div className="list">
-              <div className="list__filter">
-                <label>
-                  Filter view by Type  
-                  <select
-                    value={optionValue}
-                    onChange={(event) => setOptionValue(event.target.value)}
+          !favoritesActive && (
+            <>
+              <div className="list">
+                <div className="list__filter">
+                  <button
+                    onClick={() => setFavoritesActive(!favoritesActive)}
+                    className="list__button list__button-favorites"
                   >
-                    {filterOptions.map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <button onClick={() => handleFilter()} className="list__button">
-                  Filter
-                </button>
-                <button
-                  onClick={() => handleFilter(true)}
-                  className="list__button list__button-clear"
-                >
-                  Clean
-                </button>
-                {pokemonFiltered.length !== 0 ? (
-                  <h2>Pokemons type {optionValue}</h2>
-                ) : null}
+                    Favorites
+                  </button>
+                  <label>
+                    Filter view by Type
+                    <select
+                      value={optionValue}
+                      onChange={(event) => setOptionValue(event.target.value)}
+                    >
+                      {filterOptions.map((option) => (
+                        <option value={option} key={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button
+                    onClick={() => handleFilter()}
+                    className="list__button"
+                  >
+                    Filter
+                  </button>
+                  <button
+                    onClick={() => handleFilter(true)}
+                    className="list__button list__button-clear"
+                  >
+                    Clean
+                  </button>
+                  {pokemonFiltered.length !== 0 ? (
+                    <h2>Pokemons type {optionValue}</h2>
+                  ) : null}
+                </div>
+                <div className="list__items">
+                  {pokemonFiltered.length !== 0
+                    ? pokemonFiltered.map((pokemon) => (
+                        <Card pokemon={pokemon} key={pokemon.name} />
+                      ))
+                    : pokemonData.map((pokemon) => (
+                        <Card pokemon={pokemon} key={pokemon.name} />
+                      ))}
+                </div>
+                <div className="list__pagination">
+                  <button
+                    onClick={() => handleRequest(urls.previous)}
+                    disabled={urls?.previous === null}
+                    className=" list__button list__button-pagination"
+                  >
+                    Prev
+                  </button>
+                  <button
+                    onClick={() => handleRequest(urls.next)}
+                    disabled={urls?.next === null}
+                    className="list__button list__button-pagination"
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
-              <div className="list__items">
-                {pokemonFiltered.length !== 0
-                  ? pokemonFiltered.map((pokemon) => (
-                      <Card pokemon={pokemon} key={pokemon.name} />
-                    ))
-                  : pokemonData.map((pokemon) => (
-                      <Card pokemon={pokemon} key={pokemon.name} />
-                    ))}
-              </div>
-              <div className="list__pagination">
-                <button
-                  onClick={() => handleRequest(urls.previous)}
-                  disabled={urls?.previous === null}
-                  className=" list__button list__button-pagination"
-                >
-                  Prev
-                </button>
-                <button
-                  onClick={() => handleRequest(urls.next)}
-                  disabled={urls?.next === null}
-                  className="list__button list__button-pagination"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          </>
+            </>
+          )
         )}
       </div>
     </>
